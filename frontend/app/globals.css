@@ -1,3 +1,51 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Import Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Gabarito:wght@400;500;600;700&family=Roboto:wght@400;500;700&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap');
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  body {
+    @apply bg-background text-neutral-900 font-roboto antialiased;
+  }
+}
+
+@layer components {
+  /* Glass effect for cards */
+  .glass-card {
+    @apply bg-white/70 backdrop-blur-sm rounded-xl shadow-glass;
+  }
+  
+  .glass-card-secondary {
+    @apply bg-primary-variant/10 backdrop-blur-sm rounded-xl;
+    box-shadow: 0px 2px 2px 0px #B5B9D9, 0px 4px 2px 0px #B5B9D9;
+  }
+  
+  /* Feature section gradient backgrounds */
+  .gradient-feature {
+    background: linear-gradient(127deg, rgba(107, 44, 243, 0.15) 11%, rgba(202, 221, 153, 0.15) 72%);
+  }
+  
+  .gradient-communicate {
+    background: linear-gradient(94deg, rgba(107, 44, 243, 0.15) 13%, rgba(202, 221, 153, 0.15) 63%);
+  }
+  
+  /* Fade overlay for clipped content */
+  .fade-overlay {
+    @apply absolute bottom-0 right-0 h-40;
+    background: linear-gradient(to bottom, transparent, #F8F9FA);
+  }
+}
+
+@layer utilities {
+  /* Custom text gradient */
+  .text-gradient {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(to right, #6B2CF3, #CADD99);
+  }
+}
