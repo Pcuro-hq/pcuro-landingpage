@@ -1,8 +1,8 @@
 import Image from 'next/image';
 import { SectionHeader } from '../ui/SectionHeader';
 
-// Figma asset URL
-const productImagesUrl = 'https://www.figma.com/api/mcp/asset/b282ec5c-6f10-4756-8dd0-a7fc2a56caa1';
+// Local image path
+const productImagesUrl = '/images/ai-product-search.png';
 
 export function AIShopSection() {
   return (

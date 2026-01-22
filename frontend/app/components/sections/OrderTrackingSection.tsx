@@ -2,9 +2,9 @@ import Image from 'next/image';
 import { SectionHeader } from '../ui/SectionHeader';
 import { InfoCard } from '../ui/InfoCard';
 
-// Figma asset URLs
-const poPreviewImage = 'https://www.figma.com/api/mcp/asset/aa7c3a4b-10bc-4c27-bbc5-780a51855547';
-const orderTimelineImage = 'https://www.figma.com/api/mcp/asset/c40048a2-ea08-47f6-b6af-c187aeb1b687';
+// Local image paths
+const poPreviewImage = '/images/po-preview.png';
+const orderTimelineImage = '/images/order-timeline.png';
 
 const column1Features = [
   {

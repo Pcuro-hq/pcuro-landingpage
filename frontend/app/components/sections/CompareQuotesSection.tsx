@@ -2,11 +2,11 @@ import Image from 'next/image';
 import { SectionHeader } from '../ui/SectionHeader';
 import { FeatureCard } from '../ui/FeatureCard';
 
-// Figma asset URLs
-const quoteComparisonImage = 'https://www.figma.com/api/mcp/asset/a9a612f2-2f81-4d6b-b8b5-4f9174ec8812';
-const container3Image = 'https://www.figma.com/api/mcp/asset/5fe19b4d-556d-4089-a0b3-cc2db54a778e';
-const container12Image = 'https://www.figma.com/api/mcp/asset/489d93ec-317c-4ca8-a00b-857ba45bd993';
-const frame10000060874Image = 'https://www.figma.com/api/mcp/asset/653181fb-3573-4962-bca5-d6b2b19769bd';
+// Local image paths
+const quoteComparisonImage = '/images/quote-comparison.png';
+const container3Image = '/images/product-card-1.png';
+const container12Image = '/images/product-card-2.png';
+const frame10000060874Image = '/images/product-card-featured.png';
 
 const features = [
   {

@@ -1,23 +1,21 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
 import { Button } from '../ui/Button';
 import Image from 'next/image';
 
-// Figma asset URL for quote summary
-const quoteImage = 'https://www.figma.com/api/mcp/asset/e99939bd-5b9f-4303-bc18-ac6f80f89eb8';
+// Local image path
+const quoteImage = '/images/hero-quote-summary.png';
 
 interface HeroSectionProps {
-  onJoinWaitlist?: () => void;
   onRequestDemo?: () => void;
 }
 
-export function HeroSection({ onJoinWaitlist, onRequestDemo }: HeroSectionProps) {
-  const scrollToWaitlist = () => {
-    const waitlistSection = document.getElementById('waitlist');
-    if (waitlistSection) {
-      waitlistSection.scrollIntoView({ behavior: 'smooth' });
-    }
-    onJoinWaitlist?.();
+export function HeroSection({ onRequestDemo }: HeroSectionProps) {
+  const router = useRouter();
+
+  const handleJoinWaitlist = () => {
+    router.push('/waitlist');
   };
 
   return (
@@ -30,7 +28,7 @@ export function HeroSection({ onJoinWaitlist, onRequestDemo }: HeroSectionProps)
           Pcuro is a next-gen B2B marketplace where businesses search, compare and buy from trusted suppliers with real-time AI insights.
         </p>
         <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-6">
-          <Button variant="primary" size="lg" onClick={scrollToWaitlist}>
+          <Button variant="primary" size="lg" onClick={handleJoinWaitlist}>
             Join Waitlist
           </Button>
           <Button variant="secondary" size="lg" onClick={onRequestDemo}>

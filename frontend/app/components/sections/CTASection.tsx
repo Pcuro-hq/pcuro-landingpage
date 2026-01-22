@@ -1,18 +1,13 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
 import { Button } from '../ui/Button';
 
-interface CTASectionProps {
-  onJoinWaitlist?: () => void;
-}
+export function CTASection() {
+  const router = useRouter();
 
-export function CTASection({ onJoinWaitlist }: CTASectionProps) {
-  const scrollToWaitlist = () => {
-    const waitlistSection = document.getElementById('waitlist');
-    if (waitlistSection) {
-      waitlistSection.scrollIntoView({ behavior: 'smooth' });
-    }
-    onJoinWaitlist?.();
+  const handleJoinWaitlist = () => {
+    router.push('/waitlist');
   };
 
   return (
@@ -20,7 +15,7 @@ export function CTASection({ onJoinWaitlist }: CTASectionProps) {
       <Button 
         variant="primary" 
         size="lg" 
-        onClick={scrollToWaitlist}
+        onClick={handleJoinWaitlist}
         className="w-full max-w-[400px] shadow-button text-lg lg:text-h4"
       >
         Join Waitlist

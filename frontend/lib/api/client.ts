@@ -15,7 +15,7 @@ export class ApiClientError extends Error {
 }
 
 export async function submitWaitlist(data: WaitlistFormData): Promise<WaitlistSuccessData> {
-  const response = await fetch(`${API_BASE_URL}/api/v1/waitlist`, {
+  const response = await fetch(`${API_BASE_URL}/api/waitlist`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(data),

@@ -2,9 +2,9 @@ import Image from 'next/image';
 import { SectionHeader } from '../ui/SectionHeader';
 import { CheckListItem } from '../ui/CheckListItem';
 
-// Figma asset URLs
-const customerInfoImage = 'https://www.figma.com/api/mcp/asset/057a7878-aef9-4000-8ff3-c7ac1633da81';
-const messagingThreadImage = 'https://www.figma.com/api/mcp/asset/d9981b80-09ed-4e74-b76d-aa227961022e';
+// Local image paths
+const customerInfoImage = '/images/customer-info-panel.png';
+const messagingThreadImage = '/images/messaging-thread.png';
 
 const benefits = [
   'Track every order from request to delivery in one place',
