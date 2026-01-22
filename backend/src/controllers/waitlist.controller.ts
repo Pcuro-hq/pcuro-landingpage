@@ -9,7 +9,7 @@ import { CreateWaitlistDTO } from '../types';
  */
 export const waitlistController = {
   /**
-   * POST /api/v1/waitlist
+   * POST /api/waitlist
    * Add a new entry to the waitlist
    */
   async create(req: Request, res: Response): Promise<void> {
@@ -21,7 +21,7 @@ export const waitlistController = {
   },
 
   /**
-   * GET /api/v1/waitlist/stats
+   * GET /api/waitlist/stats
    * Get waitlist statistics (admin use)
    */
   async getStats(_req: Request, res: Response): Promise<void> {

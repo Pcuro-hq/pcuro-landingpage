@@ -6,7 +6,7 @@ import { validateWaitlist } from '../validators';
 const router = Router();
 
 /**
- * POST /api/v1/waitlist
+ * POST /api/waitlist
  * Add a new entry to the waitlist
  * 
  * Rate limited: 5 requests per 15 minutes
@@ -20,7 +20,7 @@ router.post(
 );
 
 /**
- * GET /api/v1/waitlist/stats
+ * GET /api/waitlist/stats
  * Get waitlist statistics
  * 
  * Note: In production, this should be protected with authentication

@@ -14,7 +14,7 @@ export const config = {
   
   api: {
     version: '1.0.0',
-    prefix: '/api/v1',
+    prefix: '/api',
   },
 } as const;
 
