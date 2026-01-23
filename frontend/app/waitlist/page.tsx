@@ -77,27 +77,29 @@ export default function WaitlistPage() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-background p-4 py-12">
+    <div className="min-h-screen flex flex-col items-center justify-center p-4 py-12" style={{
+      background: 'linear-gradient(135deg, rgba(107, 44, 243, 0.15) 0%, rgba(202, 221, 153, 0.25) 50%, rgba(107, 44, 243, 0.12) 100%)'
+    }}>
       {/* Waitlist Form Card */}
-      <div className="w-full max-w-[480px] bg-white rounded-lg shadow-glass p-8 md:p-12">
+      <div className="w-full max-w-[480px] bg-white/95 backdrop-blur-sm rounded-lg shadow-glass p-8 md:p-12 animate-fade-in">
         {/* Header */}
         <div className="text-center mb-8">
           <div className="mb-4">
-            <p className="text-xl md:text-2xl font-gabarito font-medium mb-3">
+            <p className="text-xl md:text-2xl font-gabarito font-medium mb-3 animate-slide-down">
               Welcome To
             </p>
-            <div className="flex justify-center">
+            <div className="flex justify-center animate-scale-in">
               <Logo size="lg" />
             </div>
           </div>
-          <h2 className="text-2xl font-semibold text-text-primary font-gabarito">
+          <h2 className="text-2xl font-semibold text-text-primary font-gabarito animate-slide-up">
             Sign Up
           </h2>
         </div>
 
         {/* Success Message */}
         {status === 'success' && (
-          <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg">
+          <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg animate-slide-down">
             <p className="text-green-800 text-center font-medium">
               ✓ Successfully added to waitlist!
             </p>
@@ -106,7 +108,7 @@ export default function WaitlistPage() {
 
         {/* Error Message */}
         {status === 'error' && errorMessage && (
-          <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg">
+          <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg animate-shake">
             <p className="text-red-800 text-center">{errorMessage}</p>
           </div>
         )}
@@ -128,7 +130,7 @@ export default function WaitlistPage() {
               onChange={handleChange('fullName')}
               placeholder="Name"
               required
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent placeholder:text-gray-400"
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent placeholder:text-gray-400 transition-all duration-200 hover:border-gray-400"
             />
           </div>
 
@@ -147,7 +149,7 @@ export default function WaitlistPage() {
               onChange={handleChange('email')}
               placeholder="Company E-mail"
               required
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent placeholder:text-gray-400"
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent placeholder:text-gray-400 transition-all duration-200 hover:border-gray-400"
             />
           </div>
 
@@ -166,7 +168,7 @@ export default function WaitlistPage() {
               onChange={handleChange('companyName')}
               placeholder="Company Name"
               required
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent placeholder:text-gray-400"
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent placeholder:text-gray-400 transition-all duration-200 hover:border-gray-400"
             />
           </div>
 
@@ -174,15 +176,23 @@ export default function WaitlistPage() {
           <button
             type="submit"
             disabled={status === 'loading'}
-            className="w-full bg-primary hover:bg-primary/90 disabled:bg-primary/50 text-white font-semibold text-lg py-4 px-6 rounded-full transition-colors duration-200 shadow-button"
+            className="w-full bg-primary hover:bg-primary/90 hover:scale-[1.02] active:scale-[0.98] disabled:bg-primary/50 disabled:cursor-not-allowed disabled:hover:scale-100 text-white font-semibold text-lg py-4 px-6 rounded-full transition-all duration-200 shadow-button hover:shadow-lg"
           >
-            {status === 'loading' ? 'Signing Up...' : 'Sign Up'}
+            {status === 'loading' ? (
+              <span className="flex items-center justify-center gap-2">
+                <svg className="animate-spin h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                Signing Up...
+              </span>
+            ) : 'Sign Up'}
           </button>
         </form>
       </div>
 
       {/* Contact Section */}
-      <div className="w-full max-w-[480px] mt-8 bg-white rounded-lg shadow-glass p-8 md:p-10">
+      <div className="w-full max-w-[480px] mt-8 bg-white/95 backdrop-blur-sm rounded-lg shadow-glass p-8 md:p-10 animate-fade-in-delayed">
         <div className="text-center mb-6">
           <h3 className="text-xl font-semibold text-text-primary font-gabarito mb-2">
             Have questions?
@@ -194,7 +204,7 @@ export default function WaitlistPage() {
 
         {/* Contact Success Message */}
         {contactStatus === 'success' && (
-          <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg">
+          <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg animate-slide-down">
             <p className="text-green-800 text-center font-medium">
               ✓ Message sent! We&apos;ll get back to you soon.
             </p>
@@ -203,7 +213,7 @@ export default function WaitlistPage() {
 
         {/* Contact Error Message */}
         {contactStatus === 'error' && contactError && (
-          <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg">
+          <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg animate-shake">
             <p className="text-red-800 text-center">{contactError}</p>
           </div>
         )}
@@ -225,7 +235,7 @@ export default function WaitlistPage() {
               onChange={handleContactChange('name')}
               placeholder="Your name"
               required
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent placeholder:text-gray-400"
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent placeholder:text-gray-400 transition-all duration-200 hover:border-gray-400"
             />
           </div>
 
@@ -244,7 +254,7 @@ export default function WaitlistPage() {
               onChange={handleContactChange('email')}
               placeholder="your@email.com"
               required
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent placeholder:text-gray-400"
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent placeholder:text-gray-400 transition-all duration-200 hover:border-gray-400"
             />
           </div>
 
@@ -263,7 +273,7 @@ export default function WaitlistPage() {
               placeholder="How can we help you?"
               required
               rows={4}
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent placeholder:text-gray-400 resize-none"
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent placeholder:text-gray-400 resize-none transition-all duration-200 hover:border-gray-400"
             />
           </div>
 
@@ -271,9 +281,17 @@ export default function WaitlistPage() {
           <button
             type="submit"
             disabled={contactStatus === 'loading'}
-            className="w-full bg-primary hover:bg-primary/90 disabled:bg-primary/50 text-white font-semibold py-3 px-6 rounded-full transition-colors duration-200"
+            className="w-full bg-primary hover:bg-primary/90 hover:scale-[1.02] active:scale-[0.98] disabled:bg-primary/50 disabled:cursor-not-allowed disabled:hover:scale-100 text-white font-semibold py-3 px-6 rounded-full transition-all duration-200 hover:shadow-lg"
           >
-            {contactStatus === 'loading' ? 'Sending...' : 'Send Message'}
+            {contactStatus === 'loading' ? (
+              <span className="flex items-center justify-center gap-2">
+                <svg className="animate-spin h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                Sending...
+              </span>
+            ) : 'Send Message'}
           </button>
         </form>
       </div>
