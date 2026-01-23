@@ -19,7 +19,7 @@ export const config = {
   
   email: {
     from: 'Pcuro <onboarding@resend.dev>',
-    replyTo: 'hello@pcuro.com',
+    replyTo: 'contact@pcuro.com',
   },
 } as const;
 

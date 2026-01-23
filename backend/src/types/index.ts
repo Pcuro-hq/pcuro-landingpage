@@ -1,4 +1,5 @@
 export * from './waitlist.types';
+export * from './contact.types';
 
 // Generic API Response types
 export interface ApiResponse<T = unknown> {

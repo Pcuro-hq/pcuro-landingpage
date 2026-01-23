@@ -1,5 +1,6 @@
 import { Router, Request, Response } from 'express';
 import { waitlistRoutes } from './waitlist.routes';
+import { contactRoutes } from './contact.routes';
 import { config } from '../config';
 
 const router = Router();
@@ -22,5 +23,11 @@ router.get('/health', (_req: Request, res: Response) => {
  * /api/v1/waitlist
  */
 router.use('/waitlist', waitlistRoutes);
+
+/**
+ * Contact routes
+ * /api/v1/contact
+ */
+router.use('/contact', contactRoutes);
 
 export { router as apiRoutes };

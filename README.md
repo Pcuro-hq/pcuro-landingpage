@@ -116,8 +116,8 @@ curl -X POST http://localhost:4000/api/v1/waitlist \
 PORT=4000
 NODE_ENV=development
 FRONTEND_URL=http://localhost:3000
-DATABASE_URL=            # For future DB integration
-EMAIL_PROVIDER_KEY=      # For future email service
+DATABASE_URL=                  # Neon PostgreSQL connection string
+RESEND_SEND_ACCESS_KEY=        # Resend API key for emails
 ```
 
 ### Frontend (`frontend/.env.local`)
