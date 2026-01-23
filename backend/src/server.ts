@@ -9,15 +9,15 @@ const startServer = async (): Promise<void> => {
     const app = createApp();
 
     app.listen(config.port, () => {
-      console.log('🚀 ================================');
-      console.log(`🚀 Pcuro Landing API`);
-      console.log(`🚀 ================================`);
-      console.log(`🚀 Environment: ${config.nodeEnv}`);
-      console.log(`🚀 Port: ${config.port}`);
-      console.log(`🚀 API Prefix: ${config.api.prefix}`);
-      console.log(`🚀 Health: http://localhost:${config.port}${config.api.prefix}/health`);
-      console.log(`🚀 Frontend URL: ${config.frontendUrl}`);
-      console.log('🚀 ================================');
+      console.log('================================');
+      console.log('Pcuro Landing API');
+      console.log('================================');
+      console.log(`Environment: ${config.nodeEnv}`);
+      console.log(`Port: ${config.port}`);
+      console.log(`API Prefix: ${config.api.prefix}`);
+      console.log(`Health: http://localhost:${config.port}${config.api.prefix}/health`);
+      console.log(`Frontend URL: ${config.frontendUrl}`);
+      console.log('================================');
     });
   } catch (error) {
     console.error('Failed to start server:', error);

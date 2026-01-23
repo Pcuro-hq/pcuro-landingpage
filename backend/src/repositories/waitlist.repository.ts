@@ -17,21 +17,13 @@ export const waitlistRepository = {
     );
 
     const row = result.rows[0];
-    const entry: WaitlistEntry = {
-      id: row.id, // UUID is already a string
+    return {
+      id: row.id,
       fullName: row.fullName,
       companyName: row.companyName,
       email: row.email,
       createdAt: row.createdAt,
     };
-    
-    console.log('[Repository] Created waitlist entry:', {
-      id: entry.id,
-      email: entry.email,
-      companyName: entry.companyName,
-    });
-
-    return entry;
   },
 
   /**
@@ -50,7 +42,7 @@ export const waitlistRepository = {
 
     const row = result.rows[0];
     return {
-      id: row.id, // UUID is already a string
+      id: row.id,
       fullName: row.fullName,
       companyName: row.companyName,
       email: row.email,
@@ -62,7 +54,6 @@ export const waitlistRepository = {
    * Find a waitlist entry by ID
    */
   async findById(id: string): Promise<WaitlistEntry | null> {
-    // Validate UUID format (basic check)
     const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
     
     if (!uuidRegex.test(id)) {
@@ -80,7 +71,7 @@ export const waitlistRepository = {
 
     const row = result.rows[0];
     return {
-      id: row.id, // UUID is already a string
+      id: row.id,
       fullName: row.fullName,
       companyName: row.companyName,
       email: row.email,
@@ -89,7 +80,7 @@ export const waitlistRepository = {
   },
 
   /**
-   * Get all waitlist entries (for admin purposes)
+   * Get all waitlist entries
    */
   async findAll(): Promise<WaitlistEntry[]> {
     const result = await pool.query(
@@ -97,7 +88,7 @@ export const waitlistRepository = {
     );
     
     return result.rows.map((row) => ({
-      id: row.id, // UUID is already a string
+      id: row.id,
       fullName: row.fullName,
       companyName: row.companyName,
       email: row.email,

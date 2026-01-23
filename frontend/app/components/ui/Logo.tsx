@@ -6,9 +6,9 @@ interface LogoProps {
 }
 
 const sizeMap = {
-  sm: { width: 80, height: 24 },
-  md: { width: 120, height: 36 },
-  lg: { width: 160, height: 48 },
+  sm: { width: 90, height: 20 },
+  md: { width: 135, height: 29 },
+  lg: { width: 180, height: 39 },
 };
 
 export function Logo({ className = '', size = 'md' }: LogoProps) {
@@ -17,13 +17,12 @@ export function Logo({ className = '', size = 'md' }: LogoProps) {
   return (
     <div className={`relative ${className}`}>
       <Image
-        src="/images/pcuro-logo.svg"
+        src="/images/pcuro-logo-new.png"
         alt="Pcuro"
         width={width}
         height={height}
         className="object-contain"
         priority
-        unoptimized
       />
     </div>
   );

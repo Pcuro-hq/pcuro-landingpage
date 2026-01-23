@@ -1,6 +1,7 @@
 import { CreateWaitlistDTO, WaitlistEntry, WaitlistResponse } from '../types';
 import { waitlistRepository } from '../repositories';
 import { AppError } from '../middlewares';
+import { emailService } from './email.service';
 
 /**
  * Waitlist Service
@@ -24,13 +25,9 @@ export const waitlistService = {
       );
     }
 
-    // Create the entry
     const entry = await waitlistRepository.create(data);
 
-    // TODO: Trigger confirmation email here
-    // await emailService.sendWaitlistConfirmation(entry);
-
-    console.log('[Service] Successfully added to waitlist:', entry.id);
+    await emailService.sendWaitlistConfirmation(entry);
 
     return {
       id: entry.id,
