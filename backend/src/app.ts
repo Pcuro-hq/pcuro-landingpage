@@ -13,6 +13,9 @@ import { errorHandler, requestLogger, generalLimiter } from './middlewares';
 export const createApp = (): Application => {
   const app = express();
 
+  // Trust proxy - required for rate limiting behind Render/load balancers
+  app.set('trust proxy', 1);
+
   // Security middleware
   app.use(helmet());
 
