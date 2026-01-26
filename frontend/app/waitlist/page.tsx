@@ -1,9 +1,12 @@
 'use client';
 
-import { useState, FormEvent } from 'react';
+import { useState, FormEvent, useEffect, useRef } from 'react';
 import { submitWaitlist, submitContact, ApiClientError } from '@/lib/api';
 import { WaitlistFormData, ContactFormData, FormStatus } from '@/lib/types';
 import { Logo } from '@/app/components/ui/Logo';
+
+// Extended status type for cold start handling
+type ExtendedFormStatus = FormStatus | 'waking';
 
 export default function WaitlistPage() {
   // Waitlist form state
@@ -12,8 +15,9 @@ export default function WaitlistPage() {
     companyName: '',
     email: '',
   });
-  const [status, setStatus] = useState<FormStatus>('idle');
+  const [status, setStatus] = useState<ExtendedFormStatus>('idle');
   const [errorMessage, setErrorMessage] = useState<string>('');
+  const wakingTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   // Contact form state
   const [contactData, setContactData] = useState<ContactFormData>({
@@ -21,20 +25,36 @@ export default function WaitlistPage() {
     email: '',
     message: '',
   });
-  const [contactStatus, setContactStatus] = useState<FormStatus>('idle');
+  const [contactStatus, setContactStatus] = useState<ExtendedFormStatus>('idle');
   const [contactError, setContactError] = useState<string>('');
+  const contactWakingTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  // Cleanup timeouts on unmount
+  useEffect(() => {
+    return () => {
+      if (wakingTimeoutRef.current) clearTimeout(wakingTimeoutRef.current);
+      if (contactWakingTimeoutRef.current) clearTimeout(contactWakingTimeoutRef.current);
+    };
+  }, []);
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setStatus('loading');
     setErrorMessage('');
 
+    // Show "waking up" message after 3 seconds if still loading
+    wakingTimeoutRef.current = setTimeout(() => {
+      setStatus((current) => current === 'loading' ? 'waking' : current);
+    }, 3000);
+
     try {
       await submitWaitlist(formData);
+      if (wakingTimeoutRef.current) clearTimeout(wakingTimeoutRef.current);
       setStatus('success');
       // Reset form
       setFormData({ fullName: '', companyName: '', email: '' });
     } catch (error) {
+      if (wakingTimeoutRef.current) clearTimeout(wakingTimeoutRef.current);
       setStatus('error');
       if (error instanceof ApiClientError) {
         setErrorMessage(error.message);
@@ -55,12 +75,19 @@ export default function WaitlistPage() {
     setContactStatus('loading');
     setContactError('');
 
+    // Show "waking up" message after 3 seconds if still loading
+    contactWakingTimeoutRef.current = setTimeout(() => {
+      setContactStatus((current) => current === 'loading' ? 'waking' : current);
+    }, 3000);
+
     try {
       await submitContact(contactData);
+      if (contactWakingTimeoutRef.current) clearTimeout(contactWakingTimeoutRef.current);
       setContactStatus('success');
       // Reset form
       setContactData({ name: '', email: '', message: '' });
     } catch (error) {
+      if (contactWakingTimeoutRef.current) clearTimeout(contactWakingTimeoutRef.current);
       setContactStatus('error');
       if (error instanceof ApiClientError) {
         setContactError(error.message);
@@ -175,7 +202,7 @@ export default function WaitlistPage() {
           {/* Submit Button */}
           <button
             type="submit"
-            disabled={status === 'loading'}
+            disabled={status === 'loading' || status === 'waking'}
             className="w-full bg-primary hover:bg-primary/90 hover:scale-[1.02] active:scale-[0.98] disabled:bg-primary/50 disabled:cursor-not-allowed disabled:hover:scale-100 text-white font-semibold text-lg py-4 px-6 rounded-full transition-all duration-200 shadow-button hover:shadow-lg"
           >
             {status === 'loading' ? (
@@ -186,8 +213,23 @@ export default function WaitlistPage() {
                 </svg>
                 Signing Up...
               </span>
+            ) : status === 'waking' ? (
+              <span className="flex items-center justify-center gap-2">
+                <svg className="animate-spin h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                Server waking up...
+              </span>
             ) : 'Sign Up'}
           </button>
+          
+          {/* Waking up info message */}
+          {status === 'waking' && (
+            <p className="text-sm text-gray-500 text-center animate-fade-in">
+              This may take up to 30 seconds on first request
+            </p>
+          )}
         </form>
       </div>
 
@@ -280,7 +322,7 @@ export default function WaitlistPage() {
           {/* Submit Button */}
           <button
             type="submit"
-            disabled={contactStatus === 'loading'}
+            disabled={contactStatus === 'loading' || contactStatus === 'waking'}
             className="w-full bg-primary hover:bg-primary/90 hover:scale-[1.02] active:scale-[0.98] disabled:bg-primary/50 disabled:cursor-not-allowed disabled:hover:scale-100 text-white font-semibold py-3 px-6 rounded-full transition-all duration-200 hover:shadow-lg"
           >
             {contactStatus === 'loading' ? (
@@ -291,8 +333,23 @@ export default function WaitlistPage() {
                 </svg>
                 Sending...
               </span>
+            ) : contactStatus === 'waking' ? (
+              <span className="flex items-center justify-center gap-2">
+                <svg className="animate-spin h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                Server waking up...
+              </span>
             ) : 'Send Message'}
           </button>
+          
+          {/* Waking up info message */}
+          {contactStatus === 'waking' && (
+            <p className="text-sm text-gray-500 text-center animate-fade-in">
+              This may take up to 30 seconds on first request
+            </p>
+          )}
         </form>
       </div>
     </div>

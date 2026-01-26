@@ -7,8 +7,6 @@ import {
   ErrorCode 
 } from '../types';
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:4000';
-
 export class ApiClientError extends Error {
   public code: string;
   public statusCode?: number;
@@ -21,8 +19,21 @@ export class ApiClientError extends Error {
   }
 }
 
-export async function submitWaitlist(data: WaitlistFormData): Promise<WaitlistSuccessData> {
-  const response = await fetch(`${API_BASE_URL}/api/waitlist`, {
+export type RetryCallback = (attempt: number, maxRetries: number) => void;
+
+export interface SubmitOptions {
+  onRetry?: RetryCallback;
+}
+
+/**
+ * Submit waitlist form data
+ * Uses local Next.js API route which proxies to backend with retry logic
+ */
+export async function submitWaitlist(
+  data: WaitlistFormData,
+  options?: SubmitOptions
+): Promise<WaitlistSuccessData> {
+  const response = await fetch('/api/waitlist', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(data),
@@ -41,8 +52,15 @@ export async function submitWaitlist(data: WaitlistFormData): Promise<WaitlistSu
   return result.data as WaitlistSuccessData;
 }
 
-export async function submitContact(data: ContactFormData): Promise<ContactSuccessData> {
-  const response = await fetch(`${API_BASE_URL}/api/contact`, {
+/**
+ * Submit contact form data
+ * Uses local Next.js API route which proxies to backend with retry logic
+ */
+export async function submitContact(
+  data: ContactFormData,
+  options?: SubmitOptions
+): Promise<ContactSuccessData> {
+  const response = await fetch('/api/contact', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(data),

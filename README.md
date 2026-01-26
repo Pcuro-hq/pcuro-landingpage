@@ -123,7 +123,8 @@ RESEND_SEND_ACCESS_KEY=        # Resend API key for emails
 ### Frontend (`frontend/.env.local`)
 
 ```env
-NEXT_PUBLIC_API_BASE_URL=http://localhost:4000
+# Server-side only - used by Next.js API routes to proxy to backend
+BACKEND_API_URL=http://localhost:4000
 ```
 
 ## Features
@@ -133,6 +134,7 @@ NEXT_PUBLIC_API_BASE_URL=http://localhost:4000
 - **Error Handling**: Standardized error responses with field-level errors
 - **CORS**: Environment-aware configuration
 - **Type Safety**: Full TypeScript on both backend and frontend
+- **Cold Start Handling**: Next.js API routes proxy requests to backend with automatic retry and exponential backoff for Render free tier
 
 ## Development Scripts
 
