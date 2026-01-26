@@ -18,7 +18,7 @@ export const config = {
   },
   
   email: {
-    from: 'Pcuro <onboarding@resend.dev>',
+    from: 'Pcuro <noreply@pcuro.com>',
     replyTo: 'contact@pcuro.com',
   },
 } as const;
