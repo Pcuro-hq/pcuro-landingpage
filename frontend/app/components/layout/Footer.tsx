@@ -4,7 +4,12 @@ import { LinkedInIcon, TwitterIcon, InstagramIcon } from '../ui/icons/SocialIcon
 
 export function Footer() {
   return (
-    <footer className="w-full bg-brand-green py-20 flex flex-col items-center justify-center gap-10">
+    <footer 
+      className="w-full py-20 flex flex-col items-center justify-center gap-10"
+      style={{
+        background: 'linear-gradient(to right, rgba(107, 44, 243, 0.35), rgba(202, 221, 153, 0.35) 80%)'
+      }}
+    >
       <Link href="/" className="cursor-pointer">
         <Logo size="md" />
       </Link>

@@ -15,7 +15,7 @@ export function Logo({ className = '', size = 'md' }: LogoProps) {
   const { width, height } = sizeMap[size];
   
   return (
-    <div className={`relative ${className}`}>
+    <div className={`relative transition-transform duration-200 hover:scale-105 ${className}`}>
       <Image
         src="/images/pcuro-logo-new.png"
         alt="Pcuro"

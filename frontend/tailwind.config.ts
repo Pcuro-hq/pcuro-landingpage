@@ -40,12 +40,13 @@ const config: Config = {
         'egyptian-slate': ['"EgyptianSlateW01-Black"', 'sans-serif'],
       },
       fontSize: {
-        'display': ['64px', { lineHeight: '1', fontWeight: '600' }],
+        'display': ['64px', { lineHeight: '1', fontWeight: '700' }],
         'h1': ['32px', { lineHeight: '1', fontWeight: '600' }],
-        'h2': ['28px', { lineHeight: '1', fontWeight: '600' }],
-        'h3': ['24px', { lineHeight: '1', fontWeight: '600' }],
-        'h4': ['22px', { lineHeight: '1', fontWeight: '600' }],
-        'body-lg': ['18px', { lineHeight: '1.4', fontWeight: '400' }],
+        'h2': ['32px', { lineHeight: '1', fontWeight: '600' }],
+        'h3': ['22px', { lineHeight: '1', fontWeight: '600' }],
+        'h4': ['18px', { lineHeight: '1', fontWeight: '500' }],
+        'card-title': ['24px', { lineHeight: '1', fontWeight: '600' }],
+        'body-lg': ['18px', { lineHeight: '25px', fontWeight: '400' }],
         'body': ['16px', { lineHeight: '1.4', fontWeight: '400' }],
       },
       boxShadow: {

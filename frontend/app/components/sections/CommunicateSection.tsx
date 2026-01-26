@@ -15,7 +15,7 @@ const benefits = [
 
 export function CommunicateSection() {
   return (
-    <section className="w-full gradient-communicate rounded-3xl px-4 md:px-8 lg:px-16 pt-10 lg:pt-20 pb-10 flex flex-col gap-6 lg:gap-10 overflow-hidden relative">
+    <section className="w-full gradient-communicate rounded-3xl px-4 md:px-8 lg:px-16 pt-10 lg:pt-20 pb-10 flex flex-col gap-6 lg:gap-10 overflow-hidden relative transition-all duration-500 hover:shadow-xl">
       <SectionHeader
         title="Communicate Easily"
         subtitle="All supplier and buyer conversations in one place"
@@ -31,7 +31,7 @@ export function CommunicateSection() {
         
         {/* Messaging Preview Images */}
         <div className="hidden lg:flex gap-6 lg:gap-10">
-          <div className="relative w-[250px] lg:w-[301px] h-[500px] lg:h-[600px]">
+          <div className="relative w-[250px] lg:w-[301px] h-[500px] lg:h-[600px] transition-transform duration-300 hover:-translate-y-2">
             <Image
               src={customerInfoImage}
               alt="Customer Info Panel"
@@ -40,7 +40,7 @@ export function CommunicateSection() {
               unoptimized
             />
           </div>
-          <div className="relative w-[340px] lg:w-[407px] h-[490px] lg:h-[584px]">
+          <div className="relative w-[340px] lg:w-[407px] h-[490px] lg:h-[584px] transition-transform duration-300 hover:-translate-y-2">
             <Image
               src={messagingThreadImage}
               alt="Messaging Thread"

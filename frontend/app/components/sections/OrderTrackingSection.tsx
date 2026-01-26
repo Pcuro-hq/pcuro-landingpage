@@ -67,7 +67,7 @@ export function OrderTrackingSection() {
         
         {/* Preview Images */}
         <div className="hidden xl:block relative flex-1 h-[608px] min-w-[500px]">
-          <div className="absolute left-0 top-0 w-[368px] h-[470px]">
+          <div className="absolute left-0 top-0 w-[368px] h-[470px] transition-transform duration-300 hover:-translate-y-2 hover:z-10">
             <Image
               src={poPreviewImage}
               alt="PO Preview"
@@ -76,7 +76,7 @@ export function OrderTrackingSection() {
               unoptimized
             />
           </div>
-          <div className="absolute left-[90px] top-[181px] w-[469px] h-[427px]">
+          <div className="absolute left-[90px] top-[181px] w-[469px] h-[427px] transition-transform duration-300 hover:-translate-y-2 hover:z-10">
             <Image
               src={orderTimelineImage}
               alt="Order Timeline Tracker"

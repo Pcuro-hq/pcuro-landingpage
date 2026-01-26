@@ -11,7 +11,7 @@ export function AIShopSection() {
         title="Use AI to Shop"
         subtitle="Search by product, spec, budget, or outcome. Pcuro's AI cuts through supplier noise to show you the most relevant, best-value options in seconds."
       />
-      <div className="relative w-full aspect-[2784/1809] rounded-lg overflow-hidden">
+      <div className="relative w-full aspect-[2784/1809] rounded-lg overflow-hidden transition-all duration-500 hover:shadow-2xl hover:scale-[1.01]">
         <Image
           src={productImagesUrl}
           alt="AI Shopping Interface"

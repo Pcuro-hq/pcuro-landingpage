@@ -27,7 +27,7 @@ export function CompareQuotesSection() {
   return (
     <section className="w-full flex flex-col gap-16 lg:gap-32">
       {/* Main Feature Card */}
-      <div className="w-full gradient-feature rounded-3xl px-6 md:px-10 lg:px-16 py-10 lg:py-20 flex flex-col xl:flex-row gap-10 lg:gap-20 items-center">
+      <div className="w-full gradient-feature rounded-3xl px-6 md:px-10 lg:px-16 py-10 lg:py-20 flex flex-col xl:flex-row gap-10 lg:gap-20 items-center transition-all duration-500 hover:shadow-xl">
         <div className="flex flex-col gap-10 lg:gap-20 flex-1">
           <div className="flex flex-col gap-6 lg:gap-10">
             <h2 className="font-gabarito font-semibold text-2xl md:text-3xl lg:text-h1 text-text-primary max-w-[656px]">
@@ -51,7 +51,7 @@ export function CompareQuotesSection() {
         
         {/* Product Cards Stack */}
         <div className="hidden xl:flex items-start justify-between flex-1 h-[413px] relative min-w-[600px]">
-          <div className="flex h-full items-start justify-center w-[220px]">
+          <div className="flex h-full items-start justify-center w-[220px] transition-transform duration-300 hover:-translate-y-2">
             <div className="relative h-[297px] w-[220px]">
               <Image
                 src={container3Image}
@@ -62,7 +62,7 @@ export function CompareQuotesSection() {
               />
             </div>
           </div>
-          <div className="flex h-full items-start justify-center w-[220px]">
+          <div className="flex h-full items-start justify-center w-[220px] transition-transform duration-300 hover:-translate-y-2">
             <div className="relative h-[297px] w-[220px]">
               <Image
                 src={container12Image}
@@ -73,7 +73,7 @@ export function CompareQuotesSection() {
               />
             </div>
           </div>
-          <div className="absolute left-1/2 -translate-x-1/2 top-0 h-[417px] flex items-end justify-center">
+          <div className="absolute left-1/2 -translate-x-1/2 top-0 h-[417px] flex items-end justify-center transition-transform duration-300 hover:-translate-y-2">
             <div className="relative h-[331px] w-[220px]">
               <Image
                 src={frame10000060874Image}
