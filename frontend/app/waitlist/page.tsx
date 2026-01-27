@@ -1,6 +1,9 @@
 'use client';
 
 import { useState, FormEvent, useEffect, useRef } from 'react';
+import { useRouter } from 'next/navigation';
+import Link from 'next/link';
+import { useToast } from '@/hooks/use-toast';
 import { submitWaitlist, submitContact, ApiClientError } from '@/lib/api';
 import { WaitlistFormData, ContactFormData, FormStatus } from '@/lib/types';
 import { Logo } from '@/app/components/ui/Logo';
@@ -9,6 +12,9 @@ import { Logo } from '@/app/components/ui/Logo';
 type ExtendedFormStatus = FormStatus | 'waking';
 
 export default function WaitlistPage() {
+  const router = useRouter();
+  const { toast } = useToast();
+  
   // Waitlist form state
   const [formData, setFormData] = useState<WaitlistFormData>({
     fullName: '',
@@ -16,8 +22,8 @@ export default function WaitlistPage() {
     email: '',
   });
   const [status, setStatus] = useState<ExtendedFormStatus>('idle');
-  const [errorMessage, setErrorMessage] = useState<string>('');
   const wakingTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const redirectTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   // Contact form state
   const [contactData, setContactData] = useState<ContactFormData>({
@@ -26,7 +32,6 @@ export default function WaitlistPage() {
     message: '',
   });
   const [contactStatus, setContactStatus] = useState<ExtendedFormStatus>('idle');
-  const [contactError, setContactError] = useState<string>('');
   const contactWakingTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   // Cleanup timeouts on unmount
@@ -34,13 +39,13 @@ export default function WaitlistPage() {
     return () => {
       if (wakingTimeoutRef.current) clearTimeout(wakingTimeoutRef.current);
       if (contactWakingTimeoutRef.current) clearTimeout(contactWakingTimeoutRef.current);
+      if (redirectTimeoutRef.current) clearTimeout(redirectTimeoutRef.current);
     };
   }, []);
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setStatus('loading');
-    setErrorMessage('');
 
     // Show "waking up" message after 3 seconds if still loading
     wakingTimeoutRef.current = setTimeout(() => {
@@ -53,13 +58,31 @@ export default function WaitlistPage() {
       setStatus('success');
       // Reset form
       setFormData({ fullName: '', companyName: '', email: '' });
+      // Show success toast
+      toast({
+        title: 'Successfully added to waitlist!',
+        description: 'Redirecting you to the home page...',
+        variant: 'success',
+      });
+      // Redirect after 2 seconds
+      redirectTimeoutRef.current = setTimeout(() => {
+        router.push('/');
+      }, 2000);
     } catch (error) {
       if (wakingTimeoutRef.current) clearTimeout(wakingTimeoutRef.current);
       setStatus('error');
       if (error instanceof ApiClientError) {
-        setErrorMessage(error.message);
+        toast({
+          title: 'Error',
+          description: error.message,
+          variant: 'destructive',
+        });
       } else {
-        setErrorMessage('Something went wrong. Please try again.');
+        toast({
+          title: 'Error',
+          description: 'Something went wrong. Please try again.',
+          variant: 'destructive',
+        });
       }
     }
   };
@@ -73,7 +96,6 @@ export default function WaitlistPage() {
   const handleContactSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setContactStatus('loading');
-    setContactError('');
 
     // Show "waking up" message after 3 seconds if still loading
     contactWakingTimeoutRef.current = setTimeout(() => {
@@ -86,13 +108,27 @@ export default function WaitlistPage() {
       setContactStatus('success');
       // Reset form
       setContactData({ name: '', email: '', message: '' });
+      // Show success toast
+      toast({
+        title: 'Message sent!',
+        description: "We'll get back to you soon.",
+        variant: 'success',
+      });
     } catch (error) {
       if (contactWakingTimeoutRef.current) clearTimeout(contactWakingTimeoutRef.current);
       setContactStatus('error');
       if (error instanceof ApiClientError) {
-        setContactError(error.message);
+        toast({
+          title: 'Error',
+          description: error.message,
+          variant: 'destructive',
+        });
       } else {
-        setContactError('Something went wrong. Please try again.');
+        toast({
+          title: 'Error',
+          description: 'Something went wrong. Please try again.',
+          variant: 'destructive',
+        });
       }
     }
   };
@@ -104,9 +140,30 @@ export default function WaitlistPage() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center p-4 py-12" style={{
+    <div className="min-h-screen flex flex-col items-center justify-center p-4 py-12 relative" style={{
       background: 'linear-gradient(135deg, rgba(107, 44, 243, 0.15) 0%, rgba(202, 221, 153, 0.25) 50%, rgba(107, 44, 243, 0.12) 100%)'
     }}>
+      {/* Back to Home Button */}
+      <Link
+        href="/"
+        className="absolute top-6 left-6 flex items-center gap-2 text-text-primary hover:text-primary transition-colors duration-200 font-medium"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="20"
+          height="20"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
+          <path d="M19 12H5M12 19l-7-7 7-7" />
+        </svg>
+        Back to Home
+      </Link>
+
       {/* Waitlist Form Card */}
       <div className="w-full max-w-[480px] bg-white/95 backdrop-blur-sm rounded-lg shadow-glass p-8 md:p-12 animate-fade-in">
         {/* Header */}
@@ -123,22 +180,6 @@ export default function WaitlistPage() {
             Sign Up
           </h2>
         </div>
-
-        {/* Success Message */}
-        {status === 'success' && (
-          <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg animate-slide-down">
-            <p className="text-green-800 text-center font-medium">
-              ✓ Successfully added to waitlist!
-            </p>
-          </div>
-        )}
-
-        {/* Error Message */}
-        {status === 'error' && errorMessage && (
-          <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg animate-shake">
-            <p className="text-red-800 text-center">{errorMessage}</p>
-          </div>
-        )}
 
         {/* Form */}
         <form onSubmit={handleSubmit} className="space-y-6">
@@ -243,22 +284,6 @@ export default function WaitlistPage() {
             We&apos;re here to help! Send us a message and we&apos;ll get back to you soon.
           </p>
         </div>
-
-        {/* Contact Success Message */}
-        {contactStatus === 'success' && (
-          <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg animate-slide-down">
-            <p className="text-green-800 text-center font-medium">
-              ✓ Message sent! We&apos;ll get back to you soon.
-            </p>
-          </div>
-        )}
-
-        {/* Contact Error Message */}
-        {contactStatus === 'error' && contactError && (
-          <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg animate-shake">
-            <p className="text-red-800 text-center">{contactError}</p>
-          </div>
-        )}
 
         {/* Contact Form */}
         <form onSubmit={handleContactSubmit} className="space-y-4">

@@ -11,15 +11,25 @@ import {
   BuyerSupplierSection,
   CTASection,
 } from './components';
+import { useToast } from '@/hooks/use-toast';
 
 export default function LandingPage() {
+  const { toast } = useToast();
+
+  const handleRequestDemo = () => {
+    toast({
+      title: 'Demo Coming Soon!',
+      description: 'Join our waitlist to stay updated on demo availability.',
+    });
+  };
+
   return (
     <main className="min-h-screen bg-background flex flex-col overflow-x-hidden">
       {/* Header */}
-      <Header />
+      <Header onRequestDemo={handleRequestDemo} />
       
       {/* Hero Section */}
-      <HeroSection />
+      <HeroSection onRequestDemo={handleRequestDemo} />
       
       {/* Features Section */}
       <section className="flex flex-col gap-16 lg:gap-32 px-4 md:px-6 lg:px-10 py-16 lg:py-24">
