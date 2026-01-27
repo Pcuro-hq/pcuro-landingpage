@@ -77,14 +77,14 @@ const config: Config = {
   				'Roboto',
   				'sans-serif'
   			],
-  			'ibm-plex': [
-  				'IBM Plex Sans"',
-  				'sans-serif'
-  			],
-  			'egyptian-slate': [
-  				'EgyptianSlateW01-Black"',
-  				'sans-serif'
-  			]
+		'ibm-plex': [
+				'"IBM Plex Sans"',
+				'sans-serif'
+			],
+			'egyptian-slate': [
+				'"EgyptianSlateW01-Black"',
+				'sans-serif'
+			]
   		},
   		fontSize: {
   			display: [
