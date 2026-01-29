@@ -1,14 +1,24 @@
 import { createApp } from './app';
 import { config } from './config';
+import { verifyDatabaseConnection, closePool } from './config/database';
+import { Server } from 'http';
+
+let server: Server | null = null;
 
 /**
  * Bootstrap and start the server
  */
 const startServer = async (): Promise<void> => {
   try {
+    // Verify database connection before starting
+    const dbConnected = await verifyDatabaseConnection();
+    if (!dbConnected && config.isProduction) {
+      throw new Error('Database connection failed - cannot start in production');
+    }
+
     const app = createApp();
 
-    app.listen(config.port, () => {
+    server = app.listen(config.port, () => {
       console.log('================================');
       console.log('Pcuro Landing API');
       console.log('================================');
@@ -17,6 +27,7 @@ const startServer = async (): Promise<void> => {
       console.log(`API Prefix: ${config.api.prefix}`);
       console.log(`Health: http://localhost:${config.port}${config.api.prefix}/health`);
       console.log(`Frontend URL: ${config.frontendUrl}`);
+      console.log(`Database: ${dbConnected ? 'Connected' : 'Not connected'}`);
       console.log('================================');
     });
   } catch (error) {
@@ -24,6 +35,30 @@ const startServer = async (): Promise<void> => {
     process.exit(1);
   }
 };
+
+/**
+ * Graceful shutdown handler
+ */
+const gracefulShutdown = async (signal: string): Promise<void> => {
+  console.log(`\n[Server] Received ${signal}. Starting graceful shutdown...`);
+
+  // Stop accepting new connections
+  if (server) {
+    server.close(() => {
+      console.log('[Server] HTTP server closed');
+    });
+  }
+
+  // Close database pool
+  await closePool();
+
+  console.log('[Server] Graceful shutdown complete');
+  process.exit(0);
+};
+
+// Handle shutdown signals
+process.on('SIGTERM', () => gracefulShutdown('SIGTERM'));
+process.on('SIGINT', () => gracefulShutdown('SIGINT'));
 
 // Handle uncaught exceptions
 process.on('uncaughtException', (error: Error) => {
