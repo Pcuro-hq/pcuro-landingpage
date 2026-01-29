@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { waitlistController } from '../controllers';
-import { asyncHandler, waitlistLimiter, optionalApiKeyAuth } from '../middlewares';
+import { asyncHandler, waitlistLimiter } from '../middlewares';
 import { validateWaitlist } from '../validators';
 
 const router = Router();
@@ -23,11 +23,10 @@ router.post(
  * GET /api/waitlist/stats
  * Get waitlist statistics
  * 
- * Protected: Requires x-api-key header if ADMIN_API_KEY env var is set
+ * Note: In production, this should be protected with authentication
  */
 router.get(
   '/stats',
-  optionalApiKeyAuth,
   asyncHandler(waitlistController.getStats)
 );
 

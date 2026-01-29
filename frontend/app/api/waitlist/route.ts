@@ -20,6 +20,9 @@ export async function POST(request: NextRequest) {
         maxRetries: 5,
         initialDelayMs: 1000,
         maxDelayMs: 30000,
+        onRetry: (attempt, maxRetries) => {
+          console.log(`[Waitlist Proxy] Retry attempt ${attempt}/${maxRetries} - Server waking up...`);
+        },
       }
     );
 
@@ -27,6 +30,8 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json(data, { status: response.status });
   } catch (error) {
+    console.error('[Waitlist Proxy] Error:', error);
+
     if (error instanceof ColdStartError) {
       return NextResponse.json(
         {
